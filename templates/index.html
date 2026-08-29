@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D World</title>
+    <title>My Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -12,19 +12,22 @@
         }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
             background: #0d0d1e;
-            perspective: 1000px; /* 3D depth effect */
+            perspective: 1000px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
         }
 
-        /* Moving 3D Grid Background */
+        /* 3D Grid Background */
         .bg-3d {
-            position: absolute;
+            position: fixed;
+            top: -50%;
+            left: -50%;
             width: 200%;
             height: 200%;
             background-image: 
@@ -33,6 +36,7 @@
             background-size: 50px 50px;
             transform: rotateX(60deg) translateZ(-200px);
             animation: gridMove 5s linear infinite;
+            z-index: 1;
         }
 
         @keyframes gridMove {
@@ -44,7 +48,9 @@
         .card-3d {
             position: relative;
             z-index: 10;
-            padding: 50px;
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             box-shadow: 
@@ -53,22 +59,23 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transform-style: preserve-3d;
-            transform: rotateY(-10deg) rotateX(10deg);
+            transform: rotateY(-5deg) rotateX(5deg);
             transition: transform 0.5s ease;
+            text-align: center;
         }
 
         .card-3d:hover {
-            transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+            transform: rotateY(0deg) rotateX(0deg) scale(1.02);
         }
 
-        /* 3D Text Effect */
+        /* 3D Name Heading */
         .text-3d {
-            font-size: 4rem;
+            font-size: 3.2rem;
             font-weight: 900;
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transform: translateZ(50px);
+            transform: translateZ(40px);
             text-shadow: 
                 1px 1px 0 #00ffff,
                 2px 2px 0 #00d4d4,
@@ -78,27 +85,39 @@
                 6px 6px 15px rgba(0,0,0,0.8);
         }
 
-        .sub-text-3d {
-            margin-top: 15px;
-            font-size: 1.3rem;
+        /* Long Introduction Styling */
+        .intro-text {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            line-height: 1.8;
+            transform: translateZ(25px);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-align: justify;
+        }
+
+        .highlight {
             color: #ff007f;
-            transform: translateZ(30px);
             font-weight: bold;
-            text-shadow: 
-                1px 1px 0 #800040,
-                2px 2px 5px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
-    <!-- 3D Moving Background Grid -->
     <div class="bg-3d"></div>
 
-    <!-- 3D Card with Text -->
     <div class="card-3d">
-        <h1 class="text-3d">Welcome to My Site</h1>
-        <p class="sub-text-3d">Python & Flask 3D Experience 🚀</p>
+        <!-- Aapka Naam Yahan Likhein -->
+        <h1 class="text-3d">Sarthak Chauhan</h1>
+
+        <!-- Aapka Long Introduction Yahan Likhein -->
+        <div class="intro-text">
+            <p>Welcome to my official website! I am a passionate <span class="highlight">Python Developer</span> learning web development using Flask and modern web technologies.</p>
+            <br>
+            <p>I enjoy building interactive web applications, experimenting with 3D UI designs, and deploying code to the cloud. This platform showcases my journey into software engineering, projects, and continuous learning in computer science.</p>
+            <br>
+            <p>I want to be a ethical hacker and my birthday is 19/08/2009</p>
+        </div>
     </div>
 
 </body>
