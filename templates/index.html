@@ -1,17 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>MY website</title>
-        <style>
-            body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color:#f4f4f4; }
-            h1 { color: #333; }
-            </style>
-            </head>
-            <body>
-                <h1>Welcome to My Website!</h1>
-                <p> This is my first website made up of python and flask.</p>
-            </body>
-            </html>
-            
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D World</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #0d0d1e;
+            perspective: 1000px; /* 3D depth effect */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Moving 3D Grid Background */
+        .bg-3d {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 255, 255, 0.15) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 255, 255, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(60deg) translateZ(-200px);
+            animation: gridMove 5s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: rotateX(60deg) translateY(0) translateZ(-200px); }
+            100% { transform: rotateX(60deg) translateY(50px) translateZ(-200px); }
+        }
+
+        /* 3D Card Container */
+        .card-3d {
+            position: relative;
+            z-index: 10;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.5),
+                0 0 20px rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transform: rotateY(-10deg) rotateX(10deg);
+            transition: transform 0.5s ease;
+        }
+
+        .card-3d:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+        }
+
+        /* 3D Text Effect */
+        .text-3d {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transform: translateZ(50px);
+            text-shadow: 
+                1px 1px 0 #00ffff,
+                2px 2px 0 #00d4d4,
+                3px 3px 0 #00aaaa,
+                4px 4px 0 #008080,
+                5px 5px 0 #005656,
+                6px 6px 15px rgba(0,0,0,0.8);
+        }
+
+        .sub-text-3d {
+            margin-top: 15px;
+            font-size: 1.3rem;
+            color: #ff007f;
+            transform: translateZ(30px);
+            font-weight: bold;
+            text-shadow: 
+                1px 1px 0 #800040,
+                2px 2px 5px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 3D Moving Background Grid -->
+    <div class="bg-3d"></div>
+
+    <!-- 3D Card with Text -->
+    <div class="card-3d">
+        <h1 class="text-3d">Welcome to My Site</h1>
+        <p class="sub-text-3d">Python & Flask 3D Experience 🚀</p>
+    </div>
+
+</body>
+</html>
