@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            background: #0d0d1e;
+            perspective: 1000px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        /* 3D Grid Background */
+        .bg-3d {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 255, 255, 0.15) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 255, 255, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(60deg) translateZ(-200px);
+            animation: gridMove 5s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: rotateX(60deg) translateY(0) translateZ(-200px); }
+            100% { transform: rotateX(60deg) translateY(50px) translateZ(-200px); }
+        }
+
+        /* 3D Card Container */
+        .card-3d {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.5),
+                0 0 20px rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transform: rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+            text-align: center;
+        }
+
+        .card-3d:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+        }
+
+        /* 3D Name Heading */
+        .text-3d {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transform: translateZ(40px);
+            text-shadow: 
+                1px 1px 0 #00ffff,
+                2px 2px 0 #00d4d4,
+                3px 3px 0 #00aaaa,
+                4px 4px 0 #008080,
+                5px 5px 0 #005656,
+                6px 6px 15px rgba(0,0,0,0.8);
+        }
+
+        /* Long Introduction Styling */
+        .intro-text {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            line-height: 1.8;
+            transform: translateZ(25px);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-align: justify;
+        }
+
+        .highlight {
+            color: #ff007f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-3d"></div>
+
+    <div class="card-3d">
+        <!-- Aapka Naam Yahan Likhein -->
+        <h1 class="text-3d">Sarthak Chauhan</h1>
+
+        <!-- Aapka Long Introduction Yahan Likhein -->
+        <div class="intro-text">
+            <p>Welcome to my official website! I am a passionate <span class="highlight">Python Developer</span> learning web development using Flask and modern web technologies.</p>
+            <br>
+            <p>I enjoy building interactive web applications, experimenting with 3D UI designs, and deploying code to the cloud. This platform showcases my journey into software engineering, projects, and continuous learning in computer science.</p>
+            <br>
+            <p>I want to be a ethical hacker and cybersecurity expert and my birthday is 19/08/2009 and i love coding and hacking skills </p>
+        </div>
+    </div>
+
+<!-- AI Chat Box Section yahan paste karein -->
+    <div style="margin-top: 30px; text-align: center; position: relative; z-index: 10;">
+        <input type="text" id="user-input" placeholder="Type Here or Press The Mic..." style="padding: 10px; width: 50%; border-radius: 5px; border: 1px solid #ccc; background: rgba(255,255,255,0.1); color: #fff;">
+        <button onclick="sendMessage()" style="padding: 10px 15px; border-radius: 5px; cursor: pointer;">Send</button>
+        <button onclick="startListening()" style="padding: 10px 15px; border-radius: 5px; cursor: pointer;">🎤 Speak</button>
+        <p id="response-box" style="margin-top: 15px; font-size: 18px; color: #fff;"></p>
+    </div>
+
+    <script>
+        function startListening() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.onresult = function(event) {
+                const spokenText = event.results[0][0].transcript;
+                document.getElementById('user-input').value = spokenText;
+                sendMessage();
+            };
+            recognition.start();
+        }
+
+        async function sendMessage() {
+            const message = document.getElementById('user-input').value;
+            if (!message) return;
+            
+            document.getElementById('response-box').innerText = "Soch raha hai...";
+
+            const res = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            });
+            const data = await res.json();
+            
+            if(data.reply) {
+                document.getElementById('response-box').innerText = data.reply;
+                const speech = new SpeechSynthesisUtterance(data.reply);
+                speech.lang = 'en-US';
+                window.speechSynthesis.speak(speech);
+            } else {
+                document.getElementById('response-box').innerText = data.error;
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
+
